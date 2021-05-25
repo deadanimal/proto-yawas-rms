@@ -1,0 +1,398 @@
+<div class="header pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-dark d-inline-block mb-0">Item Management</h6>
+
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)">
+                  <i class="fas fa-file-invoice text-dark"> </i>
+                </a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)" class="text-dark"> Iventory </a>
+              </li>
+              <li aria-current="page" class="breadcrumb-item active">
+                Item Management
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header bg-secondary">
+          <h3 class="m-0">List of Items</h3>
+        </div>
+        <div class="card-body">
+          <div class="dataTables_wrapper py-4">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length" id="datatable_length">
+                  <label>
+                    Show
+                    <select
+                      name="datatable_length"
+                      aria-controls="datatable"
+                      class="form-control form-control-sm"
+                      (change)="entriesChange($event)"
+                    >
+                      <option value="5" [selected]="entries == 5">5</option>
+                      <option value="10" [selected]="entries == 10">10</option>
+                      <option value="15" [selected]="entries == 15">15</option>
+                      <option value="-1" [selected]="entries == -1">All</option>
+                    </select>
+                    entries
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div id="datatable_filter" class="dataTables_filter">
+                  <label>
+                    <input
+                      type="search"
+                      class="form-control form-control-sm"
+                      placeholder="Search records"
+                      aria-controls="datatable"
+                      (keyup)="filterTable($event)"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <ngx-datatable
+              class="bootstrap selection-cell"
+              [columnMode]="'force'"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [rowHeight]="'auto'"
+              [limit]="entries != -1 ? entries : undefined"
+              [rows]="temp"
+            >
+              <ngx-datatable-column name="Name">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.name }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Item ID">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.apiVersion }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Quantity">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.clientId }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Percentage </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div class="row">
+                    <div class="col-auto">{{ row.totalCall }}%</div>
+                    <div class="col">
+                      <div
+                        style="
+                          border: solid 1px #ddd;
+                          margin: 5px;
+                          padding: 3px;
+                        "
+                      >
+                        <div
+                          style="background: rgb(211, 108, 108); height: 10px"
+                          [style.width]="row.totalCall + '%'"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Action">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <!-- <button class=" btn btn-icon btn-danger btn-sm" type="button" title="Action" (click)="openModal(viewAction)">
+                                                  <span class=" btn-inner--icon"> <i class=" fas fa-file-pdf"> </i> </span>
+                                              </button> -->
+                  <button
+                    class="btn btn-icon btn-default btn-sm"
+                    type="button"
+                    title="View"
+                    (click)="openModal(viewAction)"
+                  >
+                    <span class="btn-inner--icon">
+                      <i class="far fa-eye"> </i>
+                    </span>
+                  </button>
+                  <!-- <button class=" btn btn-icon btn-success btn-sm" type="button" title="Edit" (click)="openModal(edit)">
+                                                  <span class=" btn-inner--icon"> <i class=" fas fa-edit"> </i> </span>
+                                              </button> -->
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-12 mt-3">
+      <div class="text-right">
+        <button
+          type="button"
+          class="btn btn-default"
+          (click)="openModal(viewAction)"
+        >
+          New
+        </button>
+      </div>
+      <div class="row my-3">
+        <div class="col-lg-4">
+          <div class="card">
+            <img
+              alt="Image placeholder"
+              class="card-img-top"
+              src="assets/img/theme/img-1-1000x900.jpg"
+            />
+
+            <div class="card-body">
+              <label>Name: Tiger Nixon</label><br />
+              <label>Item ID: 1.0.3</label><br />
+              <label>Quantity: 61</label><br />
+
+              <a class="btn btn-link px-0" (click)="openModal(viewAction)" href="javascript:void(0)"> View </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card">
+            <img
+              alt="Image placeholder"
+              class="card-img-top"
+              src="assets/img/theme/img-1-1000x900.jpg"
+            />
+
+            <div class="card-body">
+              <label>Name: Garrett Winters</label><br />
+              <label>Item ID: 2.9.8</label><br />
+              <label>Quantity: 63</label><br />
+
+              <a class="btn btn-link px-0" (click)="openModal(viewAction)" href="javascript:void(0)"> View </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card">
+            <img
+              alt="Image placeholder"
+              class="card-img-top"
+              src="assets/img/theme/img-1-1000x900.jpg"
+            />
+
+            <div class="card-body">
+              <label>Name: Ashton Cox</label><br />
+              <label>Item ID: 3.0.1</label><br />
+              <label>Quantity: 66</label><br />
+
+              <a class="btn btn-link px-0" (click)="openModal(viewAction)" href="javascript:void(0)"> View </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-3">
+        <div class="col-lg-4">
+          <div class="card">
+            <img
+              alt="Image placeholder"
+              class="card-img-top"
+              src="assets/img/theme/img-1-1000x900.jpg"
+            />
+
+            <div class="card-body">
+              <label>Name: Cedric Kelly</label><br />
+              <label>Item ID: 1.1.0</label><br />
+              <label>Quantity: 22</label><br />
+
+              <a class="btn btn-link px-0" (click)="openModal(viewAction)" href="javascript:void(0)"> View </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card">
+            <img
+              alt="Image placeholder"
+              class="card-img-top"
+              src="assets/img/theme/img-1-1000x900.jpg"
+            />
+
+            <div class="card-body">
+              <label>Name: Airi Satou</label><br />
+              <label>Item ID: 2.6.5</label><br />
+              <label>Quantity: 33</label><br />
+
+              <a class="btn btn-link px-0" (click)="openModal(viewAction)" href="javascript:void(0)"> View </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card">
+            <img
+              alt="Image placeholder"
+              class="card-img-top"
+              src="assets/img/theme/img-1-1000x900.jpg"
+            />
+
+            <div class="card-body">
+              <label>Name: Brielle Williamson</label><br />
+              <label>Item ID: 2.2.2</label><br />
+              <label>Quantity: 61</label><br />
+
+              <a class="btn btn-link px-0" (click)="openModal(viewAction)" href="javascript:void(0)"> View </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #viewAction>
+  <div class="modal-header bg-default">
+    <h6 class="modal-title text-white" id="modal-title-default">
+      View Details
+    </h6>
+
+    <button
+      aria-label="Close"
+      class="close"
+      data-dismiss="modal"
+      type="button"
+      (click)="modalRef.hide()"
+    >
+      <span class="text-white" aria-hidden="true"> × </span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label class="form-control-label"> Upload a File </label>
+          <div class="custom-file">
+            <input
+              type="file"
+              class="custom-file-input"
+              id="customFileLang"
+              lang="en"
+            />
+            <label class="custom-file-label" for="customFileLang"
+              >Select file</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label class="form-control-label"> Item Name </label>
+          <input
+            class="form-control"
+            id="example-text-input-modalapi5"
+            type="text"
+            value="Tiger Nixon"
+          />
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label class="form-control-label"> Item ID </label>
+          <input
+            class="form-control"
+            id="example-text-input-modalapi6"
+            type="text"
+            value="1.0.3"
+          />
+        </div>
+      </div>
+
+      <div class="col-xl-6">
+        <div class="form-group">
+          <label for="FormControlSelectDash1">Item Category</label>
+          <select class="form-control" id="FormControlSelectDash1">
+            <option selected>Choose</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="form-group">
+          <label class="form-control-label"> Quantity </label>
+          <input
+            class="form-control"
+            id="example-text-input-modalapi7"
+            type="number"
+            value="61"
+          />
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="form-group">
+          <label for="example-text-input-modalapi8">Example textarea</label>
+          <textarea
+            class="form-control"
+            id="example-text-input-modalapi8"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+
+      <small class="text-muted">
+        <h5>&#42; Terms and Conditions</h5>
+        <ol>
+          <li>Cras sit amet nibh libero, in gravida nulla.</li>
+          <li>Nulla vel metus scelerisque ante sollicitudin.</li>
+          <li>
+            Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+          </li>
+        </ol>
+      </small>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      class="btn btn-default text-white"
+      type="button"
+      class="btn btn-success"
+      (click)="successSwal('saved')"
+    >
+      Save
+    </button>
+    <button
+      class="btn btn-outline-danger ml-auto"
+      data-dismiss="modal"
+      type="button"
+      (click)="modalRef.hide()"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>
