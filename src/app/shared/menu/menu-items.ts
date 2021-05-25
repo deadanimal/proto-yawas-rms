@@ -49,24 +49,24 @@ export const ROUTES: RouteInfo[] = [
       { path: 'item-management', title: 'Item Management', type: 'link' }
     ]
   },
-  {
-    path: '/admin/management',
-    title: 'Management',
-    type: 'sub',
-    icontype: 'fas fa-file-invoice text-pink',
-    collapse: 'management',
-    isCollapsed: true,
-    children: [
-      { path: 'audit-trails', title: 'Audit Trails', type: 'link' },
-      { path: 'user', title: 'User', type: 'link' }
-    ]
-  },
-  {
-    path: '/admin/report',
-    title: 'Reporting',
-    type: 'link',
-    icontype: 'fas fa-chart-bar text-red'
-  },
+  // {
+  //   path: '/admin/management',
+  //   title: 'Management',
+  //   type: 'sub',
+  //   icontype: 'fas fa-file-invoice text-pink',
+  //   collapse: 'management',
+  //   isCollapsed: true,
+  //   children: [
+  //     { path: 'audit-trails', title: 'Audit Trails', type: 'link' },
+  //     { path: 'user', title: 'User', type: 'link' }
+  //   ]
+  // },
+  // {
+  //   path: '/admin/report',
+  //   title: 'Reporting',
+  //   type: 'link',
+  //   icontype: 'fas fa-chart-bar text-red'
+  // },
   /*
   {
     path: '/helpdesk',
